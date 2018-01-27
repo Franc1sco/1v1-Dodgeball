@@ -80,7 +80,7 @@ public Action Timer_RemoveThinkTick(Handle hTimer, any iRef)
 	CreateTimer(1.4, Timer_RemoveDecoy, EntIndexToEntRef(iEntity), TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action Timer_RemoveDecoy(Handle hTimer, any iRef)
+public Action Timer_RemoveDecoy(Handle hTimer, int iRef)
 {
 	int iEntity = EntRefToEntIndex(iRef);
 	
