@@ -68,7 +68,7 @@ public int OnEntitySpawned(int iEntity)
 
 }
 
-public Action Timer_RemoveThinkTick(Handle hTimer, any iRef)
+public Action Timer_RemoveThinkTick(Handle hTimer, int iRef)
 {
 	// Get entity index
 	int iEntity = EntRefToEntIndex(iRef);
