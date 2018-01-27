@@ -30,7 +30,7 @@ public Plugin myinfo = {
   name = "CS:GO Multi1v1: Dodgeball round addon",
   author = "Franc1sco franug",
   description = "Adds an unranked Dodgeball round-type",
-  version = "1.0",
+  version = "1.0.1",
   url = "http://steamcommunity.com/id/franug"
 };
 
@@ -50,11 +50,11 @@ public void DodgeballHandler(int iClient)
 public void OnEntityCreated(int iEntity, const char[] szClassname)
 {
 	// Check if new entity is a decoy
-	if (StrEqual(szClassname, "decoy_projectile"))
-	{
-		// Hook spawn
-		SDKHook(iEntity, SDKHook_Spawn, OnEntitySpawned);
-	}
+	if (!StrEqual(szClassname, "decoy_projectile"))
+		return;
+		
+	// Hook spawn
+	SDKHook(iEntity, SDKHook_Spawn, OnEntitySpawned);
 }
 
 public int OnEntitySpawned(int iEntity)
@@ -62,6 +62,10 @@ public int OnEntitySpawned(int iEntity)
 	// Get client index
 	int iClient = GetEntPropEnt(iEntity, Prop_Send, "m_hOwnerEntity");
 	
+	// checkers on the client index for prevent errors
+	if (iClient == -1 || !IsClientInGame(iClient) || !IsPlayerAlive(iClient))
+		return;
+		
 	// If current round is decoy round then do timer
 	if(Multi1v1_GetCurrentRoundType(Multi1v1_GetArenaNumber(iClient)) == g_iRoundType)
 		CreateTimer(0.0, Timer_RemoveThinkTick, EntIndexToEntRef(iEntity), TIMER_FLAG_NO_MAPCHANGE);
