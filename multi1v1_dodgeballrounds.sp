@@ -49,14 +49,17 @@ public void DodgeballHandler(int iClient)
 
 public void OnEntityCreated(int iEntity, const char[] szClassname)
 {
+	// Check if new entity is a decoy
 	if (StrEqual(szClassname, "decoy_projectile"))
 	{
+		// Hook spawn
 		SDKHook(iEntity, SDKHook_Spawn, OnEntitySpawned);
 	}
 }
 
 public int OnEntitySpawned(int iEntity)
 {
+	// Get client index
 	int iClient = GetEntPropEnt(iEntity, Prop_Send, "m_hOwnerEntity");
 	
 	// If current round is decoy round then do timer
@@ -67,6 +70,7 @@ public int OnEntitySpawned(int iEntity)
 
 public Action Timer_RemoveThinkTick(Handle hTimer, any iRef)
 {
+	// Get entity index
 	int iEntity = EntRefToEntIndex(iRef);
 	
 	// Check if entity is valid
@@ -82,20 +86,24 @@ public Action Timer_RemoveThinkTick(Handle hTimer, any iRef)
 
 public Action Timer_RemoveDecoy(Handle hTimer, int iRef)
 {
+	// Get entity index
 	int iEntity = EntRefToEntIndex(iRef);
 	
-	if (iEntity != INVALID_ENT_REFERENCE && IsValidEntity(iEntity))
-	{
-		int iClient = GetEntPropEnt(iEntity, Prop_Data, "m_hOwnerEntity");
+	// Check if entity is valid
+	if (iEntity == INVALID_ENT_REFERENCE || !IsValidEntity(iEntity))
+		return;
 		
-		// Remove old decoy
-		AcceptEntityInput(iEntity, "Kill");
+	// Get client index
+	int iClient = GetEntPropEnt(iEntity, Prop_Data, "m_hOwnerEntity");
 		
-		// give new one
-		if (iClient != -1 && IsClientInGame(iClient) && IsPlayerAlive(iClient) && Multi1v1_GetCurrentRoundType(Multi1v1_GetArenaNumber(iClient)) == g_iRoundType)
-		{
-			GivePlayerItem(iClient, "weapon_decoy");
-		}
-	}
+	// Remove old decoy
+	AcceptEntityInput(iEntity, "Kill");
+		
+	// checkers on the client index for prevent errors
+	if (iClient == -1 || !IsClientInGame(iClient) || !IsPlayerAlive(iClient) || Multi1v1_GetCurrentRoundType(Multi1v1_GetArenaNumber(iClient)) != g_iRoundType)
+		return;
+
+	// give a new decoy
+	GivePlayerItem(iClient, "weapon_decoy");
 }
 
