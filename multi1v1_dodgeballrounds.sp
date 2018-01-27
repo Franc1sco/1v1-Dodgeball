@@ -77,10 +77,10 @@ public Action Timer_RemoveThinkTick(Handle hTimer, any iRef)
 	SetEntProp(iEntity, Prop_Data, "m_nNextThinkTick", -1);
 	
 	// Give new decoy in 1.4 seconds
-	CreateTimer(1.4, Timer_RemoveFlashbang, EntIndexToEntRef(iEntity), TIMER_FLAG_NO_MAPCHANGE);
+	CreateTimer(1.4, Timer_RemoveDecoy, EntIndexToEntRef(iEntity), TIMER_FLAG_NO_MAPCHANGE);
 }
 
-public Action Timer_RemoveFlashbang(Handle hTimer, any iRef)
+public Action Timer_RemoveDecoy(Handle hTimer, any iRef)
 {
 	int iEntity = EntRefToEntIndex(iRef);
 	
