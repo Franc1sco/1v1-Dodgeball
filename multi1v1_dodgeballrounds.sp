@@ -100,7 +100,11 @@ public Action Timer_RemoveDecoy(Handle hTimer, int iRef)
 	AcceptEntityInput(iEntity, "Kill");
 		
 	// checkers on the client index for prevent errors
-	if (iClient == -1 || !IsClientInGame(iClient) || !IsPlayerAlive(iClient) || Multi1v1_GetCurrentRoundType(Multi1v1_GetArenaNumber(iClient)) != g_iRoundType)
+	if (iClient == -1 || !IsClientInGame(iClient) || !IsPlayerAlive(iClient))
+		return;
+		
+	// Check if the current round is still the dodgeball round
+	if(Multi1v1_GetCurrentRoundType(Multi1v1_GetArenaNumber(iClient)) != g_iRoundType)
 		return;
 
 	// give a new decoy
