@@ -30,7 +30,7 @@ public Plugin myinfo = {
   name = "CS:GO Multi1v1: Dodgeball round addon",
   author = "Franc1sco franug",
   description = "Adds an unranked Dodgeball round-type",
-  version = "1.0.1",
+  version = "1.0.2",
   url = "http://steamcommunity.com/id/franug"
 };
 
@@ -45,7 +45,9 @@ public void DodgeballHandler(int iClient)
 	// Start the custom round with a decoy and 1 hp
 	GivePlayerItem(iClient, "weapon_decoy");
 	SetEntityHealth(iClient, 1);
-	SetEntProp(iClient, Prop_Data, "m_ArmorValue", 0);
+	
+	// Remove armor
+	SetEntProp(iClient, Prop_Data, "m_ArmorValue", 1);
 }
 
 public void OnEntityCreated(int iEntity, const char[] szClassname)
