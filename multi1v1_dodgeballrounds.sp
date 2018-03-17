@@ -47,7 +47,7 @@ public void DodgeballHandler(int iClient)
 	SetEntityHealth(iClient, 1);
 	
 	// Remove armor
-	SetEntProp(iClient, Prop_Data, "m_ArmorValue", 1);
+	SetEntProp(iClient, Prop_Data, "m_ArmorValue", 0);
 }
 
 public void OnEntityCreated(int iEntity, const char[] szClassname)
