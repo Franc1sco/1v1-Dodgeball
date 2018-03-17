@@ -45,6 +45,7 @@ public void DodgeballHandler(int iClient)
 	// Start the custom round with a decoy and 1 hp
 	GivePlayerItem(iClient, "weapon_decoy");
 	SetEntityHealth(iClient, 1);
+	SetEntProp(iClient, Prop_Data, "m_ArmorValue", 0);
 }
 
 public void OnEntityCreated(int iEntity, const char[] szClassname)
