@@ -46,7 +46,7 @@ public void DodgeballHandler(int iClient)
 	GivePlayerItem(iClient, "weapon_decoy");
 	SetEntityHealth(iClient, 1);
 	
-	// Remove armor
+	// Remove armor (Thanks to Wacci)
 	SetEntProp(iClient, Prop_Data, "m_ArmorValue", 0);
 }
 
